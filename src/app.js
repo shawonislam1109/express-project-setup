@@ -1,25 +1,30 @@
-// server.js
+// app.js
 const express = require("express");
-const dotenv = require("dotenv");
-const connectDB = require("../src/config/bd");
+const { applyMiddleware } = require("./middleware");
+const apiRoutes = require("./api/routes");
+const errorHandler = require("./middleware/errorHandler");
 
-dotenv.config();
 const app = express();
 
-// Connect to MongoDB
-connectDB();
+// Apply global middleware like body-parser, cors, etc.
+applyMiddleware(app);
 
+// API routes
+apiRoutes(app);
 
-// Middleware
-app.use(express.json());
-
-// Routes
-app.get("/", (req, res) => {
-  res.send("Hello, World!");
+// Health check route
+app.get("/health", (req, res) => {
+  res.status(200).send("Hello, World!");
 });
 
-// Set up server to listen
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+// 404 handler for unknown routes
+app.use("*", (req, res, next) => {
+  const error = new Error("Not Found");
+  error.status = 404;
+  next(error);
 });
+
+// Global error handler
+app.use(errorHandler);
+
+module.exports = app;
