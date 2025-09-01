@@ -1,5 +1,11 @@
 import * as authService from "./auth.service.js";
 
+/**
+ * Register a new user
+ * @param req
+ * @param res
+ * @param next
+ */
 export const register = async (req, res, next) => {
   const { name, email, password } = req.body;
   try {
@@ -10,10 +16,19 @@ export const register = async (req, res, next) => {
   }
 };
 
+/**
+ * Login user with email and password
+ * @param req
+ * @param res
+ * @param next
+ */
 export const login = async (req, res, next) => {
   const { email, password } = req.body;
   try {
-    const user = await authService.loginUserWithEmailAndPassword(email, password);
+    const user = await authService.loginUserWithEmailAndPassword(
+      email,
+      password
+    );
     const tokens = await authService.generateAuthTokens(user);
     res.send(tokens);
   } catch (error) {
@@ -21,6 +36,12 @@ export const login = async (req, res, next) => {
   }
 };
 
+/**
+ * Refresh authentication tokens
+ * @param req
+ * @param res
+ * @param next
+ */
 export const refreshTokens = async (req, res, next) => {
   const { refreshToken } = req.body;
   try {
@@ -31,6 +52,12 @@ export const refreshTokens = async (req, res, next) => {
   }
 };
 
+/**
+ * Logout user by invalidating refresh token
+ * @param req
+ * @param res
+ * @param next
+ */
 export const logout = async (req, res, next) => {
   const { refreshToken } = req.body;
   try {

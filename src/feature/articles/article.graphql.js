@@ -1,7 +1,7 @@
-const { gql } = require('apollo-server-express');
-const articleService = require('./article.service');
+import { gql } from 'apollo-server-express';
+import articleService from './article.service.js';
 
-const typeDefs = gql`
+export const typeDefs = gql`
   type Article {
     id: ID!
     title: String!
@@ -19,7 +19,7 @@ const typeDefs = gql`
   }
 `;
 
-const resolvers = {
+export const resolvers = {
   Query: {
     articles: async () => {
       return await articleService.getArticles();
@@ -37,5 +37,3 @@ const resolvers = {
     },
   },
 };
-
-module.exports = { typeDefs, resolvers };

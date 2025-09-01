@@ -1,6 +1,6 @@
-const User = require('./user.model');
+import User from "../../models/user.model.js";
 
-const createUser = async (userData) => {
+export const createUser = async (userData) => {
   if (await User.isEmailTaken(userData.email)) {
     throw new Error('Email already taken');
   }
@@ -9,7 +9,7 @@ const createUser = async (userData) => {
   return user;
 };
 
-const updateUser = async (userId, userData) => {
+export const updateUser = async (userId, userData) => {
   const user = await User.findById(userId);
   if (!user) {
     throw new Error('User not found');
@@ -20,9 +20,4 @@ const updateUser = async (userId, userData) => {
   Object.assign(user, userData);
   await user.save();
   return user;
-};
-
-module.exports = {
-  createUser,
-  updateUser,
 };

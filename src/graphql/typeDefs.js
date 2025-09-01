@@ -1,7 +1,11 @@
-const { gql } = require('apollo-server-express');
-const { mergeTypeDefs } = require('@graphql-tools/merge');
-const path = require('path');
-const { loadFilesSync } = require('@graphql-tools/load-files');
+import { gql } from 'apollo-server-express';
+import { mergeTypeDefs } from '@graphql-tools/merge';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { loadFilesSync } from '@graphql-tools/load-files';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const typesArray = loadFilesSync(path.join(__dirname, '../api/**/*.graphql.js'), {
   extensions: ['js'],
@@ -10,7 +14,7 @@ const typesArray = loadFilesSync(path.join(__dirname, '../api/**/*.graphql.js'),
 
 const rootTypeDefs = gql`
   type Query {
-    _empty: String
+    hello: String
   }
   type Mutation {
     _empty: String
@@ -19,4 +23,4 @@ const rootTypeDefs = gql`
 
 typesArray.push(rootTypeDefs);
 
-module.exports = mergeTypeDefs(typesArray);
+export default mergeTypeDefs(typesArray);

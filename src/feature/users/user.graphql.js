@@ -1,6 +1,6 @@
-const { gql, UserInputError, AuthenticationError } = require('apollo-server-express');
-const userService = require('./user.service');
-const { updateUserSchema } = require('./user.validation');
+import { gql, UserInputError, AuthenticationError } from 'apollo-server-express';
+import userService from './user.service.js';
+import { updateUserSchema } from './user.validation.js';
 
 const validate = (schema, input) => {
   const { error } = schema.validate(input, { abortEarly: false });
@@ -9,7 +9,7 @@ const validate = (schema, input) => {
   }
 };
 
-const typeDefs = gql`
+export const typeDefs = gql`
   type User {
     id: ID!
     name: String!
@@ -30,7 +30,7 @@ const typeDefs = gql`
   }
 `;
 
-const resolvers = {
+export const resolvers = {
   Query: {
     me: (parent, args, context) => {
       if (!context.user) {
@@ -52,5 +52,3 @@ const resolvers = {
     },
   },
 };
-
-module.exports = { typeDefs, resolvers };

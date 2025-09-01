@@ -1,3 +1,3 @@
-const router = require('./auth.route');
+import router from './auth.route.js';
 
-module.exports = router;
+export default router;

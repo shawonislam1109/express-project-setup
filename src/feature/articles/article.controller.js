@@ -1,6 +1,6 @@
-const articleService = require('./article.service');
+import * as articleService from './article.service.js';
 
-const createArticle = async (req, res, next) => {
+export const createArticle = async (req, res, next) => {
   try {
     const article = await articleService.createArticle({ ...req.body, author: req.user._id });
     res.status(201).json(article);
@@ -9,7 +9,7 @@ const createArticle = async (req, res, next) => {
   }
 };
 
-const getArticles = async (req, res, next) => {
+export const getArticles = async (req, res, next) => {
   try {
     const articles = await articleService.getArticles();
     res.json(articles);
@@ -18,7 +18,7 @@ const getArticles = async (req, res, next) => {
   }
 };
 
-const getArticleById = async (req, res, next) => {
+export const getArticleById = async (req, res, next) => {
   try {
     const article = await articleService.getArticleById(req.params.id);
     if (!article) {
@@ -28,10 +28,4 @@ const getArticleById = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};
-
-module.exports = {
-  createArticle,
-  getArticles,
-  getArticleById,
 };

@@ -1,11 +1,7 @@
-const Joi = require('joi');
+import Joi from 'joi';
 
-const createArticleSchema = Joi.object({
+export const createArticleSchema = Joi.object({
   title: Joi.string().required(),
   content: Joi.string().required(),
   author: Joi.string().required(),
 });
-
-module.exports = {
-  createArticleSchema,
-};

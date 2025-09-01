@@ -1,13 +1,13 @@
 // app.js
-const express = require("express");
-const { ApolloServer } = require("apollo-server-express");
-const jwt = require("jsonwebtoken");
-const User = require("./feature/users/user.model");
-const { applyMiddleware } = require("./middleware");
-const apiRoutes = require("./feature/routes");
-const errorHandler = require("./middleware/errorHandler");
-const typeDefs = require("./graphql/typeDefs");
-const resolvers = require("./graphql/resolvers");
+import express from "express";
+import { ApolloServer } from "apollo-server-express";
+import jwt from "jsonwebtoken";
+import User from "./models/user.model.js";
+import { applyMiddleware } from "./middleware/index.js";
+import apiRoutes from "./feature/routes/index.js";
+import errorHandler from "./middleware/errorHandler.js";
+import typeDefs from "./graphql/typeDefs.js";
+import resolvers from "./graphql/resolvers.js";
 
 const app = express();
 
@@ -56,4 +56,4 @@ server.start().then(() => {
   app.use(errorHandler);
 });
 
-module.exports = app;
+export default app;

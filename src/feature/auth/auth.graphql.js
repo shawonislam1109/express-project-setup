@@ -1,6 +1,6 @@
-const { gql, UserInputError } = require('apollo-server-express');
-const authService = require('./auth.service');
-const { registerSchema } = require('./auth.validation');
+import { gql, UserInputError } from 'apollo-server-express';
+import authService from './auth.service.js';
+import { registerSchema } from './auth.validation.js';
 
 const validate = (schema, input) => {
   const { error } = schema.validate(input, { abortEarly: false });
@@ -9,7 +9,7 @@ const validate = (schema, input) => {
   }
 };
 
-const typeDefs = gql`
+export const typeDefs = gql`
   type AuthResponse {
     accessToken: String!
     refreshToken: String!
@@ -33,7 +33,7 @@ const typeDefs = gql`
   }
 `;
 
-const resolvers = {
+export const resolvers = {
   Mutation: {
     register: async (_, { input }) => {
       validate(registerSchema, input);
@@ -48,5 +48,3 @@ const resolvers = {
     },
   },
 };
-
-module.exports = { typeDefs, resolvers };

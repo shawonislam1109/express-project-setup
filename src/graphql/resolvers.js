@@ -1,7 +1,11 @@
-const path = require('path');
-const { loadFilesSync } = require('@graphql-tools/load-files');
-const { mergeResolvers } = require('@graphql-tools/merge');
-const merge = require('lodash.merge');
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { loadFilesSync } from '@graphql-tools/load-files';
+import { mergeResolvers } from '@graphql-tools/merge';
+import merge from 'lodash.merge';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const resolversArray = loadFilesSync(path.join(__dirname, '../api/**/*.graphql.js'), {
   extensions: ['js'],
@@ -13,19 +17,7 @@ const resolvers = mergeResolvers(resolversArray);
 const customResolvers = {
   Query: {
     hello: () => 'Hello world!',
-    getArticles: () => [
-      {
-        id: '1',
-        title: 'First Article',
-        content: 'This is the content of the first article.',
-      },
-      {
-        id: '2',
-        title: 'Second Article',
-        content: 'This is the content of the second article.',
-      },
-    ],
   },
 };
 
-module.exports = merge(resolvers, customResolvers);
+export default merge(resolvers, customResolvers);

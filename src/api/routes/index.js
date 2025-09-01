@@ -2,6 +2,7 @@ import authRoutes from "../auth/index.js";
 import userRoutes from "../users/index.js";
 import articleRoutes from "../articles/index.js";
 import commentRoutes from "../comments/index.js";
+import fileRoutes from "../files/index.js";
 
 const routes = [
   {
@@ -19,6 +20,10 @@ const routes = [
   {
     path: "/comments",
     handler: commentRoutes,
+  },
+  {
+    path: "/files",
+    handler: fileRoutes,
   },
 ];
 

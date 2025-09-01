@@ -1,5 +1,5 @@
-const winston = require('winston');
-require('winston-logstash-udp');
+import winston from 'winston';
+import 'winston-logstash-udp';
 
 const options = {
   level: 'info',
@@ -32,4 +32,4 @@ logger.stream = {
   },
 };
 
-module.exports = logger;
+export default logger;
